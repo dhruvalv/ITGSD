@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import itgsd.model.NewTicketForm;
 import itgsd.model.Ticket;
 import itgsd.model.Unit;
+import itgsd.model.Update;
 import itgsd.model.User;
 import itgsd.model.dao.TicketDao;
 import itgsd.model.dao.UnitDao;
@@ -86,6 +87,7 @@ public class TicketController {
 		techincians.add(techinician);
 		ticket.setTechnicians(techincians);
 		ticket.setDateAssigned(new Date());
+		ticket.setStatus(Ticket.Status.ASSIGNED);
 		ticketDao.saveTicket(ticket);
 		model.put("ticketAssigned", true);
 		List<Ticket> tickets = ticketDao.getTicketsAssignedTo(user.getUnit());
@@ -112,6 +114,53 @@ public class TicketController {
 		model.put("user", user);
 		if (user.getType().equals(User.Type.ADMIN))
 			return "ahomepage";
+		return "shomepage";
+	}
+
+	@RequestMapping(value = "/editTicket", method = RequestMethod.POST)
+	public String editTicket(HttpServletRequest request, Map<String, Object> model) {
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("loggedInUser");
+		Long ticketId = Long.parseLong(request.getParameter("ticketId"));
+		String status = request.getParameter("status");
+		String priority = request.getParameter("priority");
+		Ticket ticket = ticketDao.getTicket(ticketId);
+		if (priority.equals("LOW"))
+			ticket.setPriority(Ticket.Priority.LOW);
+		else if (priority.equals("MEDIUM"))
+			ticket.setPriority(Ticket.Priority.MEDIUM);
+		else if (priority.equals("HIGH"))
+			ticket.setPriority(Ticket.Priority.HIGH);
+
+		if (status.equals("OPEN")) {
+			ticket.setStatus(Ticket.Status.OPEN);
+			ticket.setDateUpdated(new Date());
+		} else if (status.equals("ASSIGNED")) {
+			ticket.setStatus(Ticket.Status.ASSIGNED);
+			ticket.setDateUpdated(new Date());
+		} else if (status.equals("ONHOLD")) {
+			ticket.setStatus(Ticket.Status.ONHOLD);
+			ticket.setDateUpdated(new Date());
+		} else if (status.equals("COMPLETED")) {
+			ticket.setStatus(Ticket.Status.COMPLETED);
+			ticket.setDateUpdated(new Date());
+		} else if (status.equals("CLOSED")) {
+			ticket.setStatus(Ticket.Status.CLOSED);
+			ticket.setDateUpdated(new Date());
+			ticket.setDateClosed(new Date());
+		}
+		
+		ticketDao.saveTicket(ticket);
+		model.put("ticketUpdated", true);
+		List<Ticket> tickets = ticketDao.getTicketsAssignedTo(user.getUnit());
+		List<Unit> units = unitDao.getUnits();
+		model.put("units", units);
+		model.put("tickets", tickets);
+		model.put("user", user);
+		if (user.getType().equals(User.Type.ADMIN))
+			return "ahomepage";
+		if (user.getType().equals(User.Type.TECHNICIAN))
+			return "thomepage";
 		return "shomepage";
 	}
 }

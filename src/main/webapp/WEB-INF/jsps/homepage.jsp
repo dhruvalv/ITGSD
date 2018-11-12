@@ -18,7 +18,7 @@
 			$(".alert").fadeTo(1000, 0).slideUp(1000, function() {
 				$(this).remove();
 			});
-		}, 1000);
+		}, 2000);
 
 	});
 </script>
@@ -103,6 +103,16 @@
 				</button>
 				<strong>Congratulations!</strong> Ticket has been successfully
 				created!
+			</div>
+		</c:if>
+		<c:if test="${profileCreated == true}">
+			<div class="alert alert-success alert-dismissible fade show"
+				role="alert">
+				<button type="button" class="close" data-dismiss="alert"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<strong>Congratulations!</strong> Welcome to ITGSD - One Stop Shop for your issues
 			</div>
 		</c:if>
 		<c:if test="${profileUpdated == true}">

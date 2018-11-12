@@ -25,8 +25,8 @@
 
 .centerform {
 	display: block;
-    text-align: center;
- 	padding-left: 250px;
+	text-align: center;
+	padding-left: 250px;
 	padding-right: 250px;
 }
 
@@ -61,21 +61,21 @@
 	<div id='bodypage'>
 		<br>
 		<div class="container">
-			<form action="home" method="get" class="centerform">
+			<form action="signup" method="post" class="centerform">
 				<h2>Create User</h2>
 				<p class="hint-text">Create your account. It's free and only
 					takes a minute.</p>
 				<div class="form-group">
-					
-						<input type="text" class="form-control" name="first_name"
-							placeholder="First Name" required="required">
-					
+
+					<input type="text" class="form-control" name="firstName"
+						placeholder="First Name" required="required">
+
 				</div>
 				<div class="form-group">
-					
-						<input type="text" class="form-control" name="last_name"
-							placeholder="Last Name" required="required">
-					
+
+					<input type="text" class="form-control" name="lastName"
+						placeholder="Last Name" required="required">
+
 				</div>
 				<div class="form-group">
 					<div>
@@ -84,17 +84,29 @@
 					</div>
 				</div>
 				<div class="form-group">
-					
-						<input type="password" class="form-control" name="password"
-							placeholder="Password" required="required">
-					
+					<div>
+						<input type="text" class="form-control" name="username"
+							placeholder="Username (will be used for login)"
+							required="required">
+					</div>
 				</div>
 				<div class="form-group">
-					
-						<input type="password" class="form-control"
-							name="confirm_password" placeholder="Confirm Password"
-							required="required">
-					
+
+					<input type="password" class="form-control" name="password"
+						placeholder="Password" required="required">
+
+				</div>
+				<div class="form-group">
+
+					<input type="password" class="form-control" name="confirm_password"
+						placeholder="Confirm Password" required="required">
+
+				</div>
+				<div class="form-group">
+
+					<input type="password" class="form-control" name="phone"
+						placeholder="Phone" required="required">
+
 				</div>
 				<div class="form-group">
 					<label class="checkbox-inline"><input type="checkbox"
@@ -102,10 +114,10 @@
 							Use</a> &amp; <a href="#">Privacy Policy</a></label>
 				</div>
 				<div class="form-group">
-					
-						<button type="submit" class="btn btn-success btn-lg btn-block">Register
-							Now</button>
-					
+
+					<button type="submit" class="btn btn-success btn-lg btn-block">Register
+						Now</button>
+
 				</div>
 			</form>
 		</div>

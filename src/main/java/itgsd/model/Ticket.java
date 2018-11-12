@@ -27,7 +27,7 @@ public class Ticket implements Serializable {
 	}
 
 	public enum Status {
-		OPEN, ASSIGNED, ONHOLD, COMPLETED, ClOSED
+		OPEN, ASSIGNED, ONHOLD, COMPLETED, CLOSED
 	}
 
 	private static final long serialVersionUID = 1L;

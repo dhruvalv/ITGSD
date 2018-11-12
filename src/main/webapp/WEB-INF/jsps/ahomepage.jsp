@@ -28,7 +28,7 @@
 <body class="bg" id="main">
 	<div class="container">
 		<div class="mainopacbox" style="padding: 20px;">
-			<h1 class="itgsdcenter">Information Technology Global Service
+			<h1 class="itgsdcenter" style="color: #e0a800;">Information Technology Global Service
 				Desk</h1>
 			<div class="row">
 				<div class="col-sm-10"></div>
@@ -197,13 +197,14 @@
 					<div>
 						<p>
 							There are <span class="badge">${fn:length(tickets)}</span>
-							ticket(s) under ${user.unit.name}
+							ticket(s)
 						</p>
 						<table class="table table-bordered table-hovered"
 							summary="A table of data">
 							<tr class="bg-primary text-white" style="text-align: center;">
 								<th>Subject</th>
 								<th>Details</th>
+								<th>Created By</th>
 								<th>Status</th>
 								<th>Priority</th>
 								<th>Date Created</th>
@@ -217,6 +218,7 @@
 								<tr>
 									<td>${ticket.subject}</td>
 									<td>${ticket.details}</td>
+									<td>${ticket.createdForEmail}</td>
 									<td>${ticket.status}</td>
 									<td>${ticket.priority}</td>
 									<td>${ticket.dateCreated}</td>
@@ -272,7 +274,62 @@
 														</div>
 											</c:otherwise>
 										</c:choose></td>
-									<td><a href="deleteTicket?ticketId=${ticket.id}"><i
+									<td><a data-toggle="modal" href="#editTicketModal""><i
+											class="fa fa-edit" style="font-size: 24px; color: red"></i></a>
+										<div class="modal fade" id="editTicketModal" tabindex="-1"
+											role="dialog" aria-labelledby="exampleModalLabel"
+											aria-hidden="true" style="color: #000000;">
+											<div class="modal-dialog" role="document">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title" id="exampleModalLabel">Edit
+															Ticket</h5>
+														<button type="button" class="close" data-dismiss="modal"
+															aria-label="Close">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<div class="modal-body">
+														<form role="form" method="POST" action="editTicket">
+															<div class="form-group">
+																<label for="units">Choose Priority:</label> <select
+																	class="form-control" name="priority">
+																	<option value="LOW"
+																		${'LOW' == ticket.priority ? 'selected="selected"' : ''}>LOW</option>
+																	<option value="MEDIUM"
+																		${'MEDIUM' == ticket.priority ? 'selected="selected"' : ''}>MEDIUM</option>
+																	<option value="HIGH"
+																		${'HIGH' == ticket.priority ? 'selected="selected"' : ''}>HIGH</option>
+																</select>
+															</div>
+															<div class="form-group">
+																<label for="units">Choose Status:</label> <select
+																	class="form-control" name="status">
+																	<option value="OPEN"
+																		${'OPEN' == ticket.status ? 'selected="selected"' : ''}>OPEN</option>
+																	<option value="ASSIGNED"
+																		${'ASSIGNED' == ticket.status ? 'selected="selected"' : ''}>ASSIGNED</option>
+																	<option value="ONHOLD"
+																		${'ONHOLD' == ticket.status ? 'selected="selected"' : ''}>ONHOLD</option>
+																	<option value="COMPLETED"
+																		${'COMPLETED' == ticket.status ? 'selected="selected"' : ''}>COMPLETED</option>
+																	<option value="CLOSED"
+																		${'CLOSED' == ticket.status ? 'selected="selected"' : ''}>CLOSED</option>
+
+																</select>
+															</div>
+															<input type="hidden" name="ticketId" value="${ticket.id}" />
+															<div class="form-group">
+																<div>
+																	<button type="submit" class="btn btn-success">Update</button>
+																</div>
+															</div>
+														</form>
+													</div>
+												</div>
+
+											</div>
+										</div> &nbsp;&nbsp; <a href="deleteTicket?ticketId=${ticket.id}"><i
 											class="fa fa-trash-o" style="font-size: 24px; color: red"></i></a></td>
 								</tr>
 							</c:forEach>

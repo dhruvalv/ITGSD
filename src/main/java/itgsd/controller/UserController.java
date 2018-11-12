@@ -97,10 +97,10 @@ public class UserController {
 			model.put("tickets", tickets);
 			return "thomepage";
 		}
-
+		List<Ticket> tickets = ticketDao.getTickets();
+		model.put("tickets", tickets);
 		return "ahomepage";
 	}
-
 
 	@RequestMapping(value = "/updateProfile", method = RequestMethod.POST)
 	public String updateProfile(@ModelAttribute("updateProfileForm") User updateProfile, HttpServletRequest request,
@@ -118,6 +118,30 @@ public class UserController {
 		model.put("tickets", tickets);
 		model.put("units", units);
 		model.put("profileUpdated", true);
+		return "homepage";
+	}
+
+	@RequestMapping(value = "/signup", method = RequestMethod.POST)
+	public String singup(HttpServletRequest request, Map<String, Object> model) {
+		User user = new User();
+		user.setFirstName(request.getParameter("firstName"));
+		user.setLastName(request.getParameter("lastName"));
+		user.setEmail(request.getParameter("email"));
+		user.setUsername(request.getParameter("username"));
+		user.setPhone(request.getParameter("phone"));
+		user.setType(User.Type.REGULAR);
+		String password = request.getParameter("password");
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		user.setHash(passwordEncoder.encode(password));
+		user = userDao.saveUser(user);
+		HttpSession session = request.getSession();
+		session.setAttribute("loggedInUser", user);
+		List<Ticket> tickets = ticketDao.getTicketsCreatedBy(user);
+		List<Unit> units = unitDao.getUnits();
+		model.put("user", user);
+		model.put("tickets", tickets);
+		model.put("units", units);
+		model.put("profileCreated", true);
 		return "homepage";
 	}
 
