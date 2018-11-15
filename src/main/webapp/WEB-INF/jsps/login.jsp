@@ -24,7 +24,6 @@
 }
 
 #bodypage {
-	background-color: rgba(0, 0, 0, 0.7);
 	padding-left: 150px;
 	padding-right: 150px;
 	padding-bottom: 20px;
@@ -39,10 +38,10 @@
 }
 
 #centerform {
+	background-color: rgba(0, 0, 0, 0.7);
 	display: block;
 	text-align: center;
-	padding-left: 250px;
-	padding-right: 250px;
+	padding: 50px;
 }
 
 .myrightpadding {

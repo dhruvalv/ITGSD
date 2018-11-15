@@ -356,22 +356,22 @@
 							</div>
 							<div class="form-check-inline">
 								<label class="form-check-label"> <input type="radio"
-									class="form-check-input" name="userRole">Supervisor
+									class="form-check-input" name="userRole" value="SUPERVISOR">Supervisor
 								</label>
 							</div>
 							<div class="form-check-inline">
 								<label class="form-check-label"> <input type="radio"
-									class="form-check-input" name="userRole">Technician
+									class="form-check-input" name="userRole" value="TECHNICIAN">Technician
 								</label>
 							</div>
 							<div class="form-check-inline">
 								<label class="form-check-label"> <input type="radio"
-									class="form-check-input" name="userRole">General
+									class="form-check-input" name="userRole" value="GENERAL">General
 								</label>
 							</div>
 							<div class="form-check-inline">
 								<label class="form-check-label"> <input type="radio"
-									class="form-check-input" name="userRole">Admin
+									class="form-check-input" name="userRole" value="ADMIN">Admin
 								</label>
 							</div>
 							<div class="form-group">

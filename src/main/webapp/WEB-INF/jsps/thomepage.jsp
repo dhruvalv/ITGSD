@@ -330,8 +330,7 @@
 												</div>
 
 											</div>
-										</div> &nbsp;&nbsp; <a href="deleteTicket?ticketId=${ticket.id}"><i
-											class="fa fa-trash-o" style="font-size: 24px; color: red"></i></a></td>
+										</div>
 								</tr>
 							</c:forEach>
 						</table>

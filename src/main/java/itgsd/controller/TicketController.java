@@ -95,8 +95,13 @@ public class TicketController {
 		model.put("units", units);
 		model.put("tickets", tickets);
 		model.put("user", user);
-		if (user.getType().equals(User.Type.ADMIN))
+		if (user.getType().equals(User.Type.ADMIN)) {
+			List<User> userList = userDao.getUsers();
+			model.put("userList", userList);
+			List<Ticket> alltickets = ticketDao.getTickets();
+			model.put("tickets", alltickets);
 			return "ahomepage";
+		}
 		return "shomepage";
 	}
 
@@ -112,8 +117,13 @@ public class TicketController {
 		model.put("units", units);
 		model.put("tickets", tickets);
 		model.put("user", user);
-		if (user.getType().equals(User.Type.ADMIN))
+		if (user.getType().equals(User.Type.ADMIN)) {
+			List<User> userList = userDao.getUsers();
+			model.put("userList", userList);
+			List<Ticket> alltickets = ticketDao.getTickets();
+			model.put("tickets", alltickets);
 			return "ahomepage";
+		}
 		return "shomepage";
 	}
 
@@ -149,18 +159,28 @@ public class TicketController {
 			ticket.setDateUpdated(new Date());
 			ticket.setDateClosed(new Date());
 		}
-		
+
 		ticketDao.saveTicket(ticket);
 		model.put("ticketUpdated", true);
-		List<Ticket> tickets = ticketDao.getTicketsAssignedTo(user.getUnit());
+		model.put("user", user);
 		List<Unit> units = unitDao.getUnits();
 		model.put("units", units);
-		model.put("tickets", tickets);
-		model.put("user", user);
-		if (user.getType().equals(User.Type.ADMIN))
+
+		if (user.getType().equals(User.Type.ADMIN)) {
+			List<User> userList = userDao.getUsers();
+			model.put("userList", userList);
+			List<Ticket> alltickets = ticketDao.getTickets();
+			model.put("tickets", alltickets);
 			return "ahomepage";
-		if (user.getType().equals(User.Type.TECHNICIAN))
+		}
+		if (user.getType().equals(User.Type.TECHNICIAN)) {
+			List<Ticket> tickets = ticketDao.getTicketsAssignedTo(user);
+			model.put("tickets", tickets);
 			return "thomepage";
+		}
+
+		List<Ticket> tickets = ticketDao.getTicketsAssignedTo(user.getUnit());
+		model.put("tickets", tickets);
 		return "shomepage";
 	}
 }

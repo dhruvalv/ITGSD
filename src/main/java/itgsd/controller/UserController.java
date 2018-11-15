@@ -40,8 +40,42 @@ public class UserController {
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String welcome() {
-		System.out.println("inside welcome");
+	public String welcome(HttpServletRequest request, Map<String, Object> model) {
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("loggedInUser");
+		System.out.print("user"+ user);
+		if (user != null) {
+		
+			List<Unit> units = unitDao.getUnits();
+
+			model.put("units", units);
+			model.put("user", user);
+
+			if (user.getType().equals(User.Type.REGULAR)) {
+				List<Ticket> tickets = ticketDao.getTicketsCreatedBy(user);
+				model.put("tickets", tickets);
+				return "homepage";
+			}
+
+			if (user.getType().equals(User.Type.SUPERVISOR)) {
+				List<Ticket> tickets = ticketDao.getTicketsAssignedTo(user.getUnit());
+				model.put("tickets", tickets);
+				return "shomepage";
+			}
+
+			if (user.getType().equals(User.Type.TECHNICIAN)) {
+				List<Ticket> tickets = ticketDao.getTicketsAssignedTo(user);
+				model.put("tickets", tickets);
+				return "thomepage";
+			}
+
+			List<User> userList = userDao.getUsers();
+			model.put("userList", userList);
+			List<Ticket> tickets = ticketDao.getTickets();
+			model.put("tickets", tickets);
+			return "ahomepage";
+		}
+
 		return "login";
 	}
 
@@ -77,6 +111,7 @@ public class UserController {
 		HttpSession session = request.getSession();
 		session.setAttribute("loggedInUser", user);
 		List<Unit> units = unitDao.getUnits();
+
 		model.put("units", units);
 		model.put("user", user);
 
@@ -97,6 +132,9 @@ public class UserController {
 			model.put("tickets", tickets);
 			return "thomepage";
 		}
+
+		List<User> userList = userDao.getUsers();
+		model.put("userList", userList);
 		List<Ticket> tickets = ticketDao.getTickets();
 		model.put("tickets", tickets);
 		return "ahomepage";
@@ -111,14 +149,32 @@ public class UserController {
 		user.setLastName(updateProfile.getLastName());
 		user.setEmail(updateProfile.getEmail());
 		user.setPhone(updateProfile.getPhone());
-		userDao.saveUser(user);
-		List<Ticket> tickets = ticketDao.getTicketsCreatedBy(user);
+		user = userDao.saveUser(user);
 		List<Unit> units = unitDao.getUnits();
 		model.put("user", user);
-		model.put("tickets", tickets);
 		model.put("units", units);
 		model.put("profileUpdated", true);
-		return "homepage";
+
+		if (user.getType().equals(User.Type.REGULAR)) {
+			List<Ticket> tickets = ticketDao.getTicketsCreatedBy(user);
+			model.put("tickets", tickets);
+			return "homepage";
+		} else if (user.getType().equals(User.Type.SUPERVISOR)) {
+			List<Ticket> tickets = ticketDao.getTicketsAssignedTo(user.getUnit());
+			model.put("tickets", tickets);
+			return "shomepage";
+		} else if (user.getType().equals(User.Type.TECHNICIAN)) {
+			List<Ticket> tickets = ticketDao.getTicketsAssignedTo(user);
+			model.put("tickets", tickets);
+			return "thomepage";
+		}
+
+		List<User> userList = userDao.getUsers();
+		model.put("userList", userList);
+		List<Ticket> tickets = ticketDao.getTickets();
+		model.put("tickets", tickets);
+		return "ahomepage";
+
 	}
 
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
@@ -142,7 +198,51 @@ public class UserController {
 		model.put("tickets", tickets);
 		model.put("units", units);
 		model.put("profileCreated", true);
+
 		return "homepage";
+	}
+
+	@RequestMapping(value = "/assignRole", method = RequestMethod.POST)
+	public String assignRole(HttpServletRequest request, Map<String, Object> model) {
+		User userToBeAssigned = userDao.getUser(Long.parseLong(request.getParameter("user")));
+		String role = request.getParameter("role");
+		System.out.println("<><>" + role);
+		long unitId = Long.parseLong(request.getParameter("unit"));
+
+		Unit unit = unitDao.getUnit(unitId);
+		userToBeAssigned.setUnit(unit);
+
+		if (role.equals("REGULAR")) {
+			userToBeAssigned.setType(User.Type.REGULAR);
+			userToBeAssigned.setUnit(null);
+		} else if (role.equals("TECHNICIAN")) {
+			userToBeAssigned.setType(User.Type.TECHNICIAN);
+			List<User> technicians = unit.getTechnicians();
+			technicians.add(userToBeAssigned);
+			unit.setTechnicians(technicians);
+		} else if (role.equals("SUPERVISOR")) {
+			userToBeAssigned.setType(User.Type.SUPERVISOR);
+			List<User> supervisors = unit.getSupervisors();
+			supervisors.add(userToBeAssigned);
+			unit.setSupervisors(supervisors);
+		} else if (role.equals("ADMIN")) {
+			userToBeAssigned.setType(User.Type.ADMIN);
+		}
+
+		userDao.saveUser(userToBeAssigned);
+		unitDao.saveUnit(unit);
+
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("loggedInUser");
+		List<Unit> units = unitDao.getUnits();
+		model.put("units", units);
+		model.put("user", user);
+		model.put("assignedRole", true);
+		List<User> userList = userDao.getUsers();
+		model.put("userList", userList);
+		List<Ticket> tickets = ticketDao.getTickets();
+		model.put("tickets", tickets);
+		return "ahomepage";
 	}
 
 	@RequestMapping(value = "/home", method = RequestMethod.GET)

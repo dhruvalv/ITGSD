@@ -22,14 +22,21 @@
 			});
 		}, 1000);
 
+		$("#role").change(function() {
+			if ($(this).val() == "ADMIN" || $(this).val() == "REGULAR") {
+				$("#unit").hide();
+			} else {
+				$("#unit").show();
+			}
+		});
 	});
 </script>
 </head>
 <body class="bg" id="main">
 	<div class="container">
 		<div class="mainopacbox" style="padding: 20px;">
-			<h1 class="itgsdcenter" style="color: #e0a800;">Information Technology Global Service
-				Desk</h1>
+			<h1 class="itgsdcenter" style="color: #e0a800;">Information
+				Technology Global Service Desk</h1>
 			<div class="row">
 				<div class="col-sm-10"></div>
 				<div class="col-sm-1" style="color: #000000;">
@@ -129,11 +136,91 @@
 				deleted!
 			</div>
 		</c:if>
+		<c:if test="${assignedRole == true}">
+			<div class="alert alert-success alert-dismissible fade show"
+				role="alert">
+				<button type="button" class="close" data-dismiss="alert"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<strong>Congratulations!</strong> Role has been successfully
+				assigned!
+			</div>
+		</c:if>
+		<c:if test="${unitUpdated == true}">
+			<div class="alert alert-success alert-dismissible fade show"
+				role="alert">
+				<button type="button" class="close" data-dismiss="alert"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<strong>Congratulations!</strong> Unit has been successfully
+				Created!
+			</div>
+		</c:if>
 		<div class="mainopacbox" style="padding: 20px;">
 			<div class="container">
 				<div class="row">
-					<div class="col-sm-10">
+					<div class="col-sm-8">
 						<h4>Welcome, ${user.firstName}, Admin of ITGSD</h4>
+					</div>
+					<div class="col-sm-2" style="color: #000000;">
+						<!-- Button trigger modal -->
+						<button type="button" class="btn btn-primary" data-toggle="modal"
+							data-target="#assignRoleModal">Assign Role</button>
+
+						<!-- Modal -->
+						<div class="modal fade" id="assignRoleModal" tabindex="-1"
+							role="dialog" aria-labelledby="exampleModalLabel"
+							aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLabel">Assign
+											Role</h5>
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<form role="form" method="POST" action="assignRole">
+											<div class="form-group">
+												<label for="users">Choose User:</label> <select
+													class="form-control" id="user" name="user">
+													<c:forEach items="${userList}" var="users">
+														<option value="${users.id}">${users.firstName}-
+															${users.email}</option>
+													</c:forEach>
+												</select>
+											</div>
+											<div class="form-group">
+												<label for="users">Choose Role:</label> <select
+													class="form-control" id="role" name="role">
+													<option value="TECHNICIAN">TECHNICIAN</option>
+													<option value="SUPERVISOR">SUPERVISOR</option>
+													<option value="ADMIN">ADMIN</option>
+													<option value="REGULAR">REGULAR</option>
+												</select>
+											</div>
+											<div class="form-group" id="unit">
+												<label for="users">Choose Unit:</label> <select
+													class="form-control" name="unit">
+													<c:forEach items="${units}" var="unit">
+														<option value="${unit.id}">${unit.name}</option>
+													</c:forEach>
+												</select>
+											</div>
+											<div class="form-group">
+												<div>
+													<button type="submit" class="btn btn-success">Assign</button>
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 					<div class="col-sm-2">
 						<!-- Button trigger modal -->
@@ -341,44 +428,104 @@
 					<p>There are no tickets under ${user.unit.name}.</p>
 				</c:otherwise>
 			</c:choose>
-			<div>
-				<c:if test="${user.type == 'ADMIN'}">
-					<div id="menu4" class="tab-pane fade">
-						<form action="assignrole" method="get" class="centerform">
-							<h2>Assign User Role</h2>
+		</div>
 
-							<div class="form-group">
-								<div>
-									<input type="email" class="form-control" name="email"
-										placeholder="Email" required="required">
-								</div>
-							</div>
-							<div class="form-check-inline">
-								<label class="form-check-label"> <input type="radio"
-									class="form-check-input" name="userRole">Supervisor
-								</label>
-							</div>
-							<div class="form-check-inline">
-								<label class="form-check-label"> <input type="radio"
-									class="form-check-input" name="userRole">Technician
-								</label>
-							</div>
-							<div class="form-check-inline">
-								<label class="form-check-label"> <input type="radio"
-									class="form-check-input" name="userRole">General
-								</label>
-							</div>
-							<div class="form-check-inline">
-								<label class="form-check-label"> <input type="radio"
-									class="form-check-input" name="userRole">Admin
-								</label>
-							</div>
-							<div class="form-group">
-								<button type="submit" class="btn btn-success btn-lg btn-block">Assign</button>
-							</div>
-						</form>
-					</div>
-				</c:if>
+
+		<div class="mainopacbox" style="padding: 20px; color: white">
+			<div id="unitsTable">
+				<p>
+					There are <span class="badge">${fn:length(units)}</span> units
+				</p>
+				<table class="table table-bordered table-hovered"
+					summary="A table of data">
+					<tr class="bg-primary text-white" style="text-align: center;">
+						<th>Name</th>
+						<th>Description</th>
+						<th>Email</th>
+						<th>Phone</th>
+						<th>Location</th>
+						<th>Supervisor(s)</th>
+						<th>Technician(s)</th>
+						<th></th>
+					</tr>
+					<c:forEach items="${units}" var="unit">
+						<tr>
+							<td>${unit.name}</td>
+							<td>${unit.description}</td>
+							<td>${unit.email}</td>
+							<td>${unit.phone}</td>
+							<td>${unit.location}</td>
+							<td><c:forEach items="${unit.supervisors}" var="supervisor">${supervisor.firstName}, ${supervisor.lastName}<br>${supervisor.username}<br>${supervisor.email}</c:forEach></td>
+							<td><c:forEach items="${unit.technicians}" var="technician">${technician.firstName}, ${technician.lastName}<br>${technician.username}<br>${technician.email}</c:forEach></td>
+							<td><a data-toggle="modal" href="#editUnitModal""><i
+									class="fa fa-edit" style="font-size: 24px; color: red"></i></a>
+								<div class="modal fade" id="editUnitModal" tabindex="-1"
+									role="dialog" aria-labelledby="exampleModalLabel"
+									aria-hidden="true" style="color: #000000;">
+									<div class="modal-dialog" role="document">
+										<div class="modal-content">
+											<div class="modal-header">
+												<h5 class="modal-title" id="exampleModalLabel">Edit
+													Unit</h5>
+												<button type="button" class="close" data-dismiss="modal"
+													aria-label="Close">
+													<span aria-hidden="true">&times;</span>
+												</button>
+											</div>
+											<div class="modal-body">
+												<form role="form" method="POST" action="editUnit"
+													name="editUnitForm">
+													<div class="form-group">
+														<label class="control-label">Name:</label>
+														<div>
+															<input type="text" class="form-control input-lg"
+																name="name" value="${unit.name}">
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="control-label">Description:</label>
+														<div>
+															<input type="text" class="form-control input-lg"
+																name="description" value="${unit.description}">
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="control-label">Email:</label>
+														<div>
+															<input type="text" class="form-control input-lg"
+																name="email" value="${unit.email}">
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="control-label">Phone:</label>
+														<div>
+															<input type="text" class="form-control input-lg"
+																name="phone" value="${unit.phone}">
+														</div>
+													</div>
+													<div class="form-group">
+														<label class="control-label">Location:</label>
+														<div>
+															<input type="text" class="form-control input-lg"
+																name="phone" value="${unit.location}">
+														</div>
+													</div>
+													<input type="hidden" name="unitId" value="${unit.id}" />
+													<div class="form-group">
+														<div>
+															<button type="submit" class="btn btn-success">Update</button>
+														</div>
+													</div>
+												</form>
+											</div>
+										</div>
+
+									</div>
+								</div></td>
+						</tr>
+					</c:forEach>
+				</table>
+
 			</div>
 		</div>
 	</div>

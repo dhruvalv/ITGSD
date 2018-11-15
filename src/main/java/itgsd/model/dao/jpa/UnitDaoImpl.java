@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,6 +48,13 @@ public class UnitDaoImpl implements UnitDao {
         return entityManager.merge( unit );
     }
 
-	
+    @Override
+	@Transactional
+	public void deleteUnit(Long id) {
+		Query query = entityManager.createNativeQuery("DELETE FROM units WHERE id = " + id);
+		query.executeUpdate();
+
+	}
+
 
 }

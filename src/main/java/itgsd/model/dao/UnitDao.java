@@ -13,5 +13,7 @@ public interface UnitDao {
 	List<Unit> getUnits();
 
 	Unit saveUnit(Unit unit);
+	
+	void deleteUnit(Long id);
 
 }
