@@ -425,7 +425,7 @@
 					</div>
 				</c:when>
 				<c:otherwise>
-					<p>There are no tickets under ${user.unit.name}.</p>
+					<p>No tickets to show</p>
 				</c:otherwise>
 			</c:choose>
 		</div>
@@ -455,8 +455,8 @@
 							<td>${unit.email}</td>
 							<td>${unit.phone}</td>
 							<td>${unit.location}</td>
-							<td><c:forEach items="${unit.supervisors}" var="supervisor">${supervisor.firstName}, ${supervisor.lastName}<br>${supervisor.username}<br>${supervisor.email}</c:forEach></td>
-							<td><c:forEach items="${unit.technicians}" var="technician">${technician.firstName}, ${technician.lastName}<br>${technician.username}<br>${technician.email}</c:forEach></td>
+							<td><c:forEach items="${unit.supervisors}" var="supervisor">Name: ${supervisor.firstName}, ${supervisor.lastName}<br>Username: ${supervisor.username}<br>Email: ${supervisor.email}<hr></c:forEach></td>
+							<td><c:forEach items="${unit.technicians}" var="technician">Name: ${technician.firstName}, ${technician.lastName}<br>Username: ${technician.username}<br>Email: ${technician.email}<hr></c:forEach></td>
 							<td><a data-toggle="modal" href="#editUnitModal""><i
 									class="fa fa-edit" style="font-size: 24px; color: red"></i></a>
 								<div class="modal fade" id="editUnitModal" tabindex="-1"
@@ -507,7 +507,7 @@
 														<label class="control-label">Location:</label>
 														<div>
 															<input type="text" class="form-control input-lg"
-																name="phone" value="${unit.location}">
+																name="location" value="${unit.location}">
 														</div>
 													</div>
 													<input type="hidden" name="unitId" value="${unit.id}" />
