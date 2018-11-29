@@ -40,16 +40,43 @@ public class UnitController {
 	@Autowired
 	private UpdateDao updateDao;
 
-	// Create a new ticket.
+	// edit a new unit.
 	@RequestMapping(value = "/editUnit", method = RequestMethod.POST)
-	public String addUnit(@ModelAttribute("editUnitForm") Unit unitForm, HttpServletRequest request,
+	public String editUnit(@ModelAttribute("editUnitForm") Unit unitForm, HttpServletRequest request,
 			Map<String, Object> model) {
 
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute("loggedInUser");
-		String unitId= request.getParameter("unitId");
+		String unitId = request.getParameter("unitId");
 		Unit unit = unitDao.getUnit(Long.parseLong(unitId));
-		System.out.println("unitId: "+unitId);
+		System.out.println("unitId: " + unitId);
+		unit.setName(unitForm.getName());
+		unit.setDescription(unitForm.getDescription());
+		unit.setEmail(unitForm.getEmail());
+		unit.setPhone(unitForm.getPhone());
+		unit.setLocation(unitForm.getLocation());
+
+		unitDao.saveUnit(unit);
+
+		List<Unit> units = unitDao.getUnits();
+		model.put("units", units);
+		model.put("user", user);
+		model.put("unitUpdated", true);
+		List<User> userList = userDao.getUsers();
+		model.put("userList", userList);
+		List<Ticket> tickets = ticketDao.getTickets();
+		model.put("tickets", tickets);
+		return "ahomepage";
+	}
+
+	// edit a new unit.
+	@RequestMapping(value = "/addUnit", method = RequestMethod.POST)
+	public String addUnit(@ModelAttribute("addUnitForm") Unit unitForm, HttpServletRequest request,
+			Map<String, Object> model) {
+
+		HttpSession session = request.getSession();
+		User user = (User) session.getAttribute("loggedInUser");
+		Unit unit = new Unit();
 		unit.setName(unitForm.getName());
 		unit.setDescription(unitForm.getDescription());
 		unit.setEmail(unitForm.getEmail());

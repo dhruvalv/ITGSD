@@ -164,119 +164,178 @@
 					<div class="col-sm-8">
 						<h4>Welcome, ${user.firstName}, Admin of ITGSD</h4>
 					</div>
-					<div class="col-sm-2" style="color: #000000;">
-						<!-- Button trigger modal -->
-						<button type="button" class="btn btn-primary" data-toggle="modal"
-							data-target="#assignRoleModal">Assign Role</button>
+					<button type="button" class="btn btn-primary" data-toggle="modal"
+						data-target="#addUnitModal">Add Unit</button>
+					&nbsp; &nbsp;
+					<button type="button" class="btn btn-primary" data-toggle="modal"
+						data-target="#assignRoleModal">Assign Role</button>
+					&nbsp; &nbsp;
+					<button type="button" class="btn btn-primary" data-toggle="modal"
+						data-target="#createTicketModal">Create Ticket</button>
+				</div>
 
-						<!-- Modal -->
-						<div class="modal fade" id="assignRoleModal" tabindex="-1"
-							role="dialog" aria-labelledby="exampleModalLabel"
-							aria-hidden="true">
-							<div class="modal-dialog" role="document">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h5 class="modal-title" id="exampleModalLabel">Assign
-											Role</h5>
-										<button type="button" class="close" data-dismiss="modal"
-											aria-label="Close">
-											<span aria-hidden="true">&times;</span>
-										</button>
-									</div>
-									<div class="modal-body">
-										<form role="form" method="POST" action="assignRole">
-											<div class="form-group">
-												<label for="users">Choose User:</label> <select
-													class="form-control" id="user" name="user">
-													<c:forEach items="${userList}" var="users">
-														<option value="${users.id}">${users.firstName}-
-															${users.email}</option>
-													</c:forEach>
-												</select>
-											</div>
-											<div class="form-group">
-												<label for="users">Choose Role:</label> <select
-													class="form-control" id="role" name="role">
-													<option value="TECHNICIAN">TECHNICIAN</option>
-													<option value="SUPERVISOR">SUPERVISOR</option>
-													<option value="ADMIN">ADMIN</option>
-													<option value="REGULAR">REGULAR</option>
-												</select>
-											</div>
-											<div class="form-group" id="unit">
-												<label for="users">Choose Unit:</label> <select
-													class="form-control" name="unit">
-													<c:forEach items="${units}" var="unit">
-														<option value="${unit.id}">${unit.name}</option>
-													</c:forEach>
-												</select>
-											</div>
-											<div class="form-group">
-												<div>
-													<button type="submit" class="btn btn-success">Assign</button>
-												</div>
-											</div>
-										</form>
-									</div>
-								</div>
+				<!-- Modal -->
+				<div class="modal fade" id="addUnitModal" tabindex="-1"
+					role="dialog" aria-labelledby="exampleModalLabel"
+					aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">Add New Unit</h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
 							</div>
-						</div>
-					</div>
-					<div class="col-sm-2">
-						<!-- Button trigger modal -->
-						<button type="button" class="btn btn-primary" data-toggle="modal"
-							data-target="#createTicketModal">Create Ticket</button>
-
-						<!-- Modal -->
-						<div class="modal fade" id="createTicketModal" tabindex="-1"
-							role="dialog" aria-labelledby="exampleModalLabel"
-							aria-hidden="true">
-							<div class="modal-dialog" role="document">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h5 class="modal-title" id="exampleModalLabel">Create New
-											Ticket</h5>
-										<button type="button" class="close" data-dismiss="modal"
-											aria-label="Close">
-											<span aria-hidden="true">&times;</span>
-										</button>
+							<div class="modal-body">
+								<form role="form" method="POST" action="addUnit"
+									name="addUnitForm">
+									<div class="form-group">
+										<label class="control-label">Name:</label>
+										<div>
+											<input type="text" class="form-control input-lg" name="name">
+										</div>
 									</div>
-									<div class="modal-body">
-										<form role="form" method="POST" action="createTicket">
-											<div class="form-group">
-												<label class="control-label">Subject:</label>
-												<div>
-													<input type="text" class="form-control input-lg"
-														name="subject">
-												</div>
-											</div>
-											<div class="form-group">
-												<label class="control-label">Description:</label>
-												<div>
-													<input type="text" class="form-control input-lg"
-														name="description">
-												</div>
-											</div>
-											<div class="form-group">
-												<label for="units">Choose Unit:</label> <select
-													class="form-control" id="unit" name="unit">
-													<c:forEach items="${units}" var="unit">
-														<option value="${unit.name}">${unit.name}</option>
-													</c:forEach>
-												</select>
-											</div>
-											<div class="form-group">
-												<div>
-													<button type="submit" class="btn btn-success">Create</button>
-												</div>
-											</div>
-										</form>
+									<div class="form-group">
+										<label class="control-label">Description:</label>
+										<div>
+											<input type="text" class="form-control input-lg"
+												name="description">
+										</div>
 									</div>
-								</div>
+									<div class="form-group">
+										<label class="control-label">Email:</label>
+										<div>
+											<input type="text" class="form-control input-lg" name="email">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label">Phone:</label>
+										<div>
+											<input type="text" class="form-control input-lg" name="phone">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label">Location:</label>
+										<div>
+											<input type="text" class="form-control input-lg"
+												name="location">
+										</div>
+									</div>
+									<div class="form-group">
+										<div>
+											<button type="submit" class="btn btn-success">Add</button>
+										</div>
+									</div>
+								</form>
 							</div>
 						</div>
 					</div>
 				</div>
+
+				<!-- Modal -->
+				<div class="modal fade" id="assignRoleModal" tabindex="-1"
+					role="dialog" aria-labelledby="exampleModalLabel"
+					aria-hidden="true" style="color:black;">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">Assign Role</h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<form role="form" method="POST" action="assignRole">
+									<div class="form-group">
+										<label for="users">Choose User:</label> <select
+											class="form-control" id="user" name="user">
+											<c:forEach items="${userList}" var="users">
+												<option value="${users.id}">${users.firstName}-
+													${users.email}</option>
+											</c:forEach>
+										</select>
+									</div>
+									<div class="form-group">
+										<label for="users">Choose Role:</label> <select
+											class="form-control" id="role" name="role">
+											<option value="TECHNICIAN">TECHNICIAN</option>
+											<option value="SUPERVISOR">SUPERVISOR</option>
+											<option value="ADMIN">ADMIN</option>
+											<option value="REGULAR">REGULAR</option>
+										</select>
+									</div>
+									<div class="form-group" id="unit">
+										<label for="users">Choose Unit:</label> <select
+											class="form-control" name="unit">
+											<c:forEach items="${units}" var="unit">
+												<option value="${unit.id}">${unit.name}</option>
+											</c:forEach>
+										</select>
+									</div>
+									<div class="form-group">
+										<div>
+											<button type="submit" class="btn btn-success">Assign</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<!-- Modal -->
+				<div class="modal fade" id="createTicketModal" tabindex="-1"
+					role="dialog" aria-labelledby="exampleModalLabel"
+					aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">Create New
+									Ticket</h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<form role="form" method="POST" action="createTicket">
+									<div class="form-group">
+										<label class="control-label">Subject:</label>
+										<div>
+											<input type="text" class="form-control input-lg"
+												name="subject">
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label">Description:</label>
+										<div>
+											<input type="text" class="form-control input-lg"
+												name="description">
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="units">Choose Unit:</label> <select
+											class="form-control" id="unit" name="unit">
+											<c:forEach items="${units}" var="unit">
+												<option value="${unit.name}">${unit.name}</option>
+											</c:forEach>
+										</select>
+									</div>
+									<div class="form-group">
+										<div>
+											<button type="submit" class="btn btn-success">Create</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
 			</div>
 			<br>
 			<c:choose>
@@ -455,8 +514,10 @@
 							<td>${unit.email}</td>
 							<td>${unit.phone}</td>
 							<td>${unit.location}</td>
-							<td><c:forEach items="${unit.supervisors}" var="supervisor">Name: ${supervisor.firstName}, ${supervisor.lastName}<br>Username: ${supervisor.username}<br>Email: ${supervisor.email}<hr></c:forEach></td>
-							<td><c:forEach items="${unit.technicians}" var="technician">Name: ${technician.firstName}, ${technician.lastName}<br>Username: ${technician.username}<br>Email: ${technician.email}<hr></c:forEach></td>
+							<td><c:forEach items="${unit.supervisors}" var="supervisor">Name: ${supervisor.firstName}, ${supervisor.lastName}<br>Username: ${supervisor.username}<br>Email: ${supervisor.email}<hr>
+								</c:forEach></td>
+							<td><c:forEach items="${unit.technicians}" var="technician">Name: ${technician.firstName}, ${technician.lastName}<br>Username: ${technician.username}<br>Email: ${technician.email}<hr>
+								</c:forEach></td>
 							<td><a data-toggle="modal" href="#editUnitModal""><i
 									class="fa fa-edit" style="font-size: 24px; color: red"></i></a>
 								<div class="modal fade" id="editUnitModal" tabindex="-1"
