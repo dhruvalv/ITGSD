@@ -173,7 +173,6 @@
 					<button type="button" class="btn btn-primary" data-toggle="modal"
 						data-target="#createTicketModal">Create Ticket</button>
 				</div>
-
 				<!-- Modal -->
 				<div class="modal fade" id="addUnitModal" tabindex="-1"
 					role="dialog" aria-labelledby="exampleModalLabel"
@@ -232,7 +231,6 @@
 						</div>
 					</div>
 				</div>
-
 				<!-- Modal -->
 				<div class="modal fade" id="assignRoleModal" tabindex="-1"
 					role="dialog" aria-labelledby="exampleModalLabel"
@@ -284,8 +282,6 @@
 						</div>
 					</div>
 				</div>
-
-
 				<!-- Modal -->
 				<div class="modal fade" id="createTicketModal" tabindex="-1"
 					role="dialog" aria-labelledby="exampleModalLabel"
@@ -334,8 +330,6 @@
 						</div>
 					</div>
 				</div>
-
-
 			</div>
 			<br>
 			<c:choose>

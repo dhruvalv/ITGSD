@@ -104,7 +104,7 @@
 				</div>
 				<div class="form-group">
 
-					<input type="password" class="form-control" name="phone"
+					<input type="number" class="form-control" name="phone"
 						placeholder="Phone" required="required">
 
 				</div>
