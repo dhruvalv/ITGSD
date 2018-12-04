@@ -79,7 +79,7 @@
 				<div class="form-group">
 					<div>
 						<button type="submit" class="btn btn-success">Login</button>
-						<br> <a href='signup'>New User?</a>
+						<br> <a href='signup'>New User? Click here to Sign Up </a>
 					</div>
 				</div>
 			</form>
