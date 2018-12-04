@@ -176,7 +176,7 @@
 				<!-- Modal -->
 				<div class="modal fade" id="addUnitModal" tabindex="-1"
 					role="dialog" aria-labelledby="exampleModalLabel"
-					aria-hidden="true">
+					aria-hidden="true" style="color:black">
 					<div class="modal-dialog" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
