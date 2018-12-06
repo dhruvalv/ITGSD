@@ -111,8 +111,8 @@ insert into users (id, type, username, hash, first_name, last_name, email, unit_
     (5, 'SUPERVISOR', 'rreyes', '$2a$10$9PJIPq9PMYHd9L8kb66/Nuu7DDQqq29eOsVF1F8SnPZ2UfD6KC/ly',
         'Raven', 'Reyes', 'rreyes@calstate.edu', 4);
 insert into users (id, type, username, hash, first_name, last_name, email, unit_id) values
-    (6, 'SUPERVISOR', 'mgreen', '$2a$10$9PJIPq9PMYHd9L8kb66/Nuu7DDQqq29eOsVF1F8SnPZ2UfD6KC/ly',
-        'Monty', 'Green', 'mgreen@calstate.edu', 5);
+    (6, 'SUPERVISOR', 'ramin', '$2a$10$9PJIPq9PMYHd9L8kb66/Nuu7DDQqq29eOsVF1F8SnPZ2UfD6KC/ly',
+        'Ravi', 'Amin', 'mgreen@calstate.edu', 5);
 insert into users (id, type, username, hash, first_name, last_name, email, unit_id) values
     (7, 'SUPERVISOR', 'tjaha', '$2a$10$9PJIPq9PMYHd9L8kb66/Nuu7DDQqq29eOsVF1F8SnPZ2UfD6KC/ly',
         'Thelonious', 'Jaha', 'tjaha@calstate.edu', 6);
@@ -141,8 +141,8 @@ insert into users (id, type, username, hash, first_name, last_name, email, unit_
     (14, 'TECHNICIAN', 'jfoley', '$2a$10$d8lhouzPhxZ.nLCaqjh5gevTyA3tZDUMwuy2WAsWAm.i/ag/btcxe',
         'Justin', 'Foley', 'jfoley@calstate.edu', 4);
 insert into users (id, type, username, hash, first_name, last_name, email, unit_id) values
-    (15, 'TECHNICIAN', 'bwalker', '$2a$10$d8lhouzPhxZ.nLCaqjh5gevTyA3tZDUMwuy2WAsWAm.i/ag/btcxe',
-        'Bryce', 'Walker', 'bwalker@calstate.edu', 5);
+    (15, 'TECHNICIAN', 'rpatel', '$2a$10$d8lhouzPhxZ.nLCaqjh5gevTyA3tZDUMwuy2WAsWAm.i/ag/btcxe',
+        'Rutvi', 'Patel', 'bwalker@calstate.edu', 5);
 insert into users (id, type, username, hash, first_name, last_name, email, unit_id) values
     (16, 'TECHNICIAN', 'astandall', '$2a$10$d8lhouzPhxZ.nLCaqjh5gevTyA3tZDUMwuy2WAsWAm.i/ag/btcxe',
         'Alex', 'Standall', 'astandall@calstate.edu', 6);
